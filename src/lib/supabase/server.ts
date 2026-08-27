@@ -4,9 +4,33 @@ import { cookies } from 'next/headers'
 export async function createClient() {
   const cookieStore = await cookies()
 
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseKey) {
+    console.warn('Supabase environment variables are missing. Using a dummy client.');
+    // Return a dummy client to prevent server components from crashing
+    return {
+      auth: { getUser: async () => ({ data: { user: null } }) },
+      from: () => ({
+        select: () => ({
+          eq: () => ({
+            eq: () => ({
+              order: async () => ({ data: null, error: 'No env vars' }),
+              single: async () => ({ data: null, error: 'No env vars' })
+            }),
+            single: async () => ({ data: null, error: 'No env vars' }),
+            order: async () => ({ data: null, error: 'No env vars' })
+          }),
+          order: async () => ({ data: null, error: 'No env vars' })
+        })
+      })
+    } as any;
+  }
+
   return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseKey,
     {
       cookies: {
         getAll() {
