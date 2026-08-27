@@ -22,7 +22,7 @@ export default async function ObjectsPage() {
         <section className="w-full pb-32">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-black/10">
             {products && products.length > 0 ? (
-              products.map((product) => (
+              products.map((product: any) => (
                 <ProductCard 
                   key={product.id} 
                   id={product.id}
