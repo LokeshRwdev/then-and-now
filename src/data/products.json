@@ -1,0 +1,157 @@
+[
+  {
+    "id": "1",
+    "slug": "artsy-table",
+    "title": "Artsy Table",
+    "tag": "HOME",
+    "category": "object",
+    "image": "/images/products/product-1.png",
+    "fallbackImage": "/images/featured/featured-5.png",
+    "shortDescription": "To pay homage to vintage modernism, Artsy Table celebrates triangular form and marquetry in wood with Indian Laurel, Rosewood and Teakwood.",
+    "buttonText": "REQUEST PRICE",
+    "pageData": {
+      "heroSubtitle": "",
+      "heroImage": "",
+      "secondaryHeading": "Image 01 - Template Making",
+      "longDescription": "Every detail begins with precision. A full-scale template is created to achieve the perfect equilateral triangle and ensure every curve fits seamlessly. We carefully selected Indian Laurel, Jackwood, and Satinwood, allowing their natural colours, grain, and character to create a striking composition—without the need for artificial finishes. Every cut is guided by accuracy, setting the foundation for the craftsmanship that follows",
+      "specs": {
+        "year": "2024",
+        "materials": "Indian Teakwood, Indian Laurel & Rosewood",
+        "dimensions": "H88 × W68 × D72 cm"
+      },
+      "gallery": {
+        "landscape1": "/images/products/product-1/gallery-1.png",
+        "portrait1": "/images/products/product-1/gallery-2.png",
+        "portrait2": "/images/products/product-1/gallery-3.png",
+        "feature": "/images/products/product-1/gallery-4.png",
+        "detail1": "/images/products/product-1/gallery-5.png",
+        "detail2": "/images/products/product-1/gallery-6.png",
+        "detail3": "/images/products/product-1/gallery-7.png"
+      }
+    }
+  },
+  {
+    "id": "2",
+    "slug": "organic-console",
+    "title": "Blooming",
+    "tag": "RESTAURANT",
+    "category": "object",
+    "image": "/images/products/product-2.png",
+    "fallbackImage": "/images/featured/featured-3.png",
+    "shortDescription": "Sculpted with organic marquetry motifs and solid timber legs joined by a hand-burnished brass stretcher. Designed as an anchor statement piece for hospitality and dining salons.",
+    "buttonText": "REQUEST PRICE",
+    "pageData": {
+      "heroSubtitle": "NOW & THEN COLLECTION",
+      "heroImage": "",
+      "secondaryHeading": "ORGANIC CONSOLE - BRASS & TIMBER",
+      "longDescription": "Crafted from individual veneers hand-arranged by master artisans, the Blooming embodies quiet strength. A warm brass rail provides both structural counterweight and a rich visual horizon line.\n\nThe tactile marquetry surface features floral-inspired organic inlays rendered in varying tones of natural oak and walnut.",
+      "specs": {
+        "year": "2023",
+        "materials": "Natural Teak, Solid Oak Marquetry, Raw Brass",
+        "dimensions": "H85 × W180 × D42 cm"
+      },
+      "gallery": {
+        "landscape1": "/images/products/product-2/gallery-1.png",
+        "portrait1": "/images/products/product-2/gallery-2.png",
+        "portrait2": "/images/products/product-2/gallery-3.png",
+        "feature": "/images/products/product-2/gallery-4.png",
+        "detail1": "/images/products/product-2/gallery-5.png",
+        "detail2": "/images/products/product-2/gallery-6.png",
+        "detail3": "/images/products/product-2/gallery-7.png"
+      }
+    }
+  },
+  {
+    "id": "3",
+    "slug": "sculptural-console",
+    "title": "The Quiet Presence",
+    "tag": "HOME",
+    "category": "object",
+    "image": "/images/products/product-3.png",
+    "fallbackImage": "/images/featured/featured-4.png",
+    "shortDescription": "Cast branch-like ironwork legs supporting tiered black slate slabs, complemented by an asymmetrical organic blackened bronze mirror frame.",
+    "buttonText": "REQUEST PRICE",
+    "pageData": {
+      "heroSubtitle": "NOW & THEN COLLECTION",
+      "heroImage": "",
+      "secondaryHeading": "SCULPTURAL CONSOLE - BLACKENED BRONZE",
+      "longDescription": "An intersection of nature-inspired silhouette and architectural rigor. Hand-forged textured metalwork echoes organic branches, creating a striking conversation between darkness and reflection.\n\nThe matching mirror frame is cast in blackened bronze with a hand-hammered relief rim.",
+      "specs": {
+        "year": "2024",
+        "materials": "Forged Textured Iron, Black Slate, Bronze-tinted Glass",
+        "dimensions": "H82 × W145 × D38 cm"
+      },
+      "gallery": {
+        "landscape1": "/images/products/product-3/gallery-1.png",
+        "portrait1": "/images/products/product-3/gallery-2.png",
+        "portrait2": "/images/products/product-3/gallery-3.png",
+        "feature": "/images/products/product-3/gallery-4.png",
+        "detail1": "/images/products/product-3/gallery-5.png",
+        "detail2": "/images/products/product-3/gallery-6.png",
+        "detail3": "/images/products/product-3/gallery-7.png"
+      }
+    }
+  },
+  {
+    "id": "4",
+    "slug": "marquetry-cabinet",
+    "title": "Pithalai",
+    "tag": "RESTAURANT",
+    "category": "object",
+    "image": "/images/products/product-4.png",
+    "fallbackImage": "/images/featured/featured-6.png",
+    "shortDescription": "Hand-inlaid wood camouflage marquetry doors encasing warm interior storage, elevated on slender turned hardwood legs with an under-tier display shelf.",
+    "buttonText": "REQUEST PRICE",
+    "pageData": {
+      "heroSubtitle": "NOW & THEN COLLECTION",
+      "heroImage": "",
+      "secondaryHeading": "MARQUETRY CABINET - MULTI-VENEER",
+      "longDescription": "The Pithalai combines hundreds of individually cut pieces of aged teak, walnut, and oak to create a hypnotic undulating topography.\n\nInterior fit-outs include custom stemware racks, mirrored bottle back-panels, and soft-close solid timber drawers.",
+      "specs": {
+        "year": "2023",
+        "materials": "Smoked Oak, Teak & Walnut Inlay, Polished Brass Fittings",
+        "dimensions": "H155 × W95 × D48 cm"
+      },
+      "gallery": {
+        "landscape1": "/images/products/product-4/gallery-1.png",
+        "portrait1": "/images/products/product-4/gallery-2.png",
+        "portrait2": "/images/products/product-4/gallery-3.png",
+        "feature": "/images/products/product-4/gallery-4.png",
+        "detail1": "/images/products/product-4/gallery-5.png",
+        "detail2": "/images/products/product-4/gallery-6.png",
+        "detail3": "/images/products/product-4/gallery-7.png"
+      }
+    }
+  },
+  {
+    "id": "5",
+    "slug": "artistic-credenza",
+    "title": "Kall",
+    "tag": "HOME",
+    "category": "object",
+    "image": "/images/products/product-5.png",
+    "fallbackImage": "/images/featured/featured-2.png",
+    "shortDescription": "Hand-painted floral and botanical fresco doors with carved chevron slats and an inverted pagoda floating mantle top, finished in midnight indigo lacquer.",
+    "buttonText": "REQUEST PRICE",
+    "pageData": {
+      "heroSubtitle": "",
+      "heroImage": "",
+      "secondaryHeading": "ARTISTIC CREDENZA - INDIGO & GOLD",
+      "longDescription": "A landmark statement credenza blending fine art painting with cabinetmaker joinery. Gilded botanical motifs emerge from deep Prussian blue oil glazes, crowned with a sculpted ebony floating ledge.\n\nThe geometric chevron panels open smoothly on concealed soft-close pivot hinges to reveal lined European oak shelving.",
+      "specs": {
+        "year": "2024",
+        "materials": "Indigo Lacquered Beech, Hand-painted Leaf Motifs, Ebony Top",
+        "dimensions": "H92 × W210 × D50 cm"
+      },
+      "gallery": {
+        "landscape1": "/images/products/product-5/gallery-1.png",
+        "portrait1": "/images/products/product-5/gallery-2.png",
+        "portrait2": "/images/products/product-5/gallery-3.png",
+        "feature": "/images/products/product-5/gallery-4.png",
+        "detail1": "/images/products/product-5/gallery-5.png",
+        "detail2": "/images/products/product-5/gallery-6.png",
+        "detail3": "/images/products/product-5/gallery-7.png"
+      }
+    }
+  }
+]

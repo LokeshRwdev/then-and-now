@@ -1,221 +1,195 @@
 import PageBanner from "@/components/layout/PageBanner";
-import Image from "next/image";
-import Link from "next/link";
+import AppImage from "@/components/ui/AppImage";
+import { IMAGES } from "@/lib/images";
 
 export default function AboutPage() {
   return (
     <>
-      <main className="min-h-screen bg-white">
-      <PageBanner 
-        title="Our Capabilities" 
-        subtitle="NOW & THEN COLLECTION" 
-        bgColor="bg-[#e5e5e5]" 
-      />
+      <main className="min-h-screen bg-white text-[#1A1A1A]">
+        {/* Hero Banner */}
+        <PageBanner
+          title="About us"
+          imageSrc={IMAGES.about.hero}
+          bgColor="bg-[#e5e5e5]"
+          height="h-[60vh] md:h-[75vh]"
+        />
 
-      {/* Main Content */}
-      <section className="py-20 px-6 md:px-12 lg:px-24">
-        <div className="max-w-4xl mx-auto flex flex-col items-center">
-          {/* Blue underlined text block */}
-          <div className="text-center mb-20">
-            <p className="text-xl md:text-2xl leading-relaxed text-[#0066cc] font-medium inline-block relative">
-              <span className="underline decoration-2 underline-offset-4">
-                Our furniture stands as a culmination of centuries of craft
-                knowledge,
-              </span>
-              <br className="hidden md:block" />
-              <span className="underline decoration-2 underline-offset-4">
-                and skill, passed down from generation to generation. The name
-              </span>
-              <br className="hidden md:block" />
-              <span className="underline decoration-2 underline-offset-4">
-                'Phantom Hands' is a homage to the legacy of these past
-                artisans,
-              </span>
-              <br className="hidden md:block" />
-              <span className="underline decoration-2 underline-offset-4">
-                whose contributions manifest in every piece we make.
-              </span>
+        {/* Black Statement Section */}
+        <section className="w-full bg-black text-white py-16 md:py-20 lg:py-24 px-6 md:px-12 lg:px-20">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-sm sm:text-base md:text-[17px] font-light leading-relaxed tracking-normal text-neutral-200">
+              The best work is built through meaningful, long-term partnerships.
+              Now &amp; Then collaborates with designers, manufacturers, craftsmen,
+              and makers across the country to create work that is thoughtful,
+              enduring, and rooted in the richness of Indian craft and contemporary
+              design.
             </p>
           </div>
+        </section>
 
-          {/* Large Hero Placeholder Image */}
-          <div className="w-full h-[400px] md:h-[600px] bg-[#e5e5e5] mb-24 relative">
-            {/* <Image src="/placeholder-hero.jpg" alt="Hero Image" fill className="object-cover" /> */}
-          </div>
-
-          {/* Who We Are Section */}
-          <div className="text-center mb-24 max-w-2xl mx-auto space-y-6">
-            <h2 className="text-lg md:text-xl font-medium mb-8">Who We Are</h2>
-            <p className="text-sm md:text-base text-gray-800 leading-relaxed">
-              We are Bangalore-based furniture makers who believe deeply in the
-              unique, aesthetic pleasure of crafted furniture.
-            </p>
-            <p className="text-sm md:text-base text-gray-800 leading-relaxed">
-              We operate at the intersection of modernist design histories from
-              the Indian subcontinent, contemporary design, and craft based
-              production.
-            </p>
-            <p className="text-sm md:text-base text-gray-800 leading-relaxed">
-              Our workshop, while physically an ecosystem of skilled carpenters,
-              wood polishers, cane weavers, upholsterers, and tailors, from
-              craft communities across India, is in spirit, a living archive of
-              material intelligence.
-            </p>
-            <p className="text-sm md:text-base text-gray-800 leading-relaxed">
-              Through our research and practice, we function as creative
-              custodians and stewards of modernism from our region, which was,
-              and continues to be, defined by its use of local materials and
-              craft traditions, while assimilating global influences.
-            </p>
-          </div>
-
-          {/* Image + Caption 1 */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full mb-24">
-            <div className="h-[300px] md:h-[400px] bg-[#e5e5e5] relative w-full">
-              {/* <Image src="/placeholder-1.jpg" alt="Vintage furniture" fill className="object-cover" /> */}
+        {/* White Editorial Content Section with Staggered Luxury Editorial Alignment */}
+        <section className="w-full bg-white py-16 sm:py-20 md:py-28 lg:py-36 px-6 sm:px-10 md:px-16 lg:px-24">
+          <div className="max-w-5xl xl:max-w-6xl mx-auto flex flex-col">
+            {/* 1. Who We Are (Aligned Left) */}
+            <div className="w-full sm:w-[88%] md:w-[72%] lg:w-[62%] self-start text-left mb-16 sm:mb-20 md:mb-24">
+              <h2 className="text-2xl sm:text-3xl md:text-[32px] font-normal text-neutral-900 mb-6 sm:mb-8 tracking-tight text-left">
+                Who We Are
+              </h2>
+              <div className="space-y-6 text-xs sm:text-sm md:text-[15px] leading-relaxed text-neutral-800 text-left font-sans">
+                <p>
+                  Now &amp; Then is an Indian design studio creating furniture, lighting,
+                  and objects that bring together contemporary design, craftsmanship,
+                  and materiality.
+                </p>
+                <p>
+                  Working across the country and between collectible design and
+                  industrial production, we collaborate with ambitious designers and
+                  skilled manufacturers to develop thoughtful, enduring pieces.
+                </p>
+                <p>
+                  Our work is driven by a belief in creating pieces that belong to the
+                  present, while allowing time to become part of their story
+                  balancing design integrity with lasting cultural, aesthetic, and
+                  commercial value.
+                </p>
+              </div>
             </div>
-            <div className="text-center md:text-left">
-              <p className="text-xs md:text-sm text-gray-600 leading-relaxed max-w-xs mx-auto md:mx-0">
-                Image caption: Vintage furniture displayed at the Chandigarh
-                Museum of Architecture.
-                <br />
-                Image courtesy: Phantom Hands Archive.
-              </p>
+
+            {/* Image 1: Studio / Exhibition Photo (Aligned Left) */}
+            <div className="w-full sm:w-[88%] md:w-[72%] lg:w-[62%] self-start mb-24 sm:mb-28 md:mb-36 aspect-[4/3] sm:aspect-[16/11] relative overflow-hidden bg-[#e5e5e5] shadow-sm">
+              <AppImage
+                src={IMAGES.about.exhibition}
+                fallbackSrc={IMAGES.about.hero}
+                alt="Now & Then Studio Exhibition"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 750px"
+                className="object-cover"
+                priority
+              />
+            </div>
+
+            {/* 2. Evolution (Shifted Right / Indented) */}
+            <div className="w-full sm:w-[88%] md:w-[72%] lg:w-[62%] self-end ml-auto text-left mb-16 sm:mb-20 md:mb-24">
+              <h2 className="text-2xl sm:text-3xl md:text-[32px] font-normal text-neutral-900 mb-6 sm:mb-8 tracking-tight text-left">
+                Evolution
+              </h2>
+              <div className="space-y-6 text-xs sm:text-sm md:text-[15px] leading-relaxed text-neutral-800 text-left font-sans">
+                <p>
+                  Now &amp; Then began in 2022, from a personal desire to create
+                  something of my own within the world of design. As an architect, I
+                  had always been drawn to the relationship between spaces,
+                  objects, materials, and the people who experience them. Over
+                  time, I found myself increasingly interested in what happens
+                  beyond the space itself–the objects that inhabit it, the way they
+                  are made, and the stories they carry. The idea for Now &amp; Then
+                  grew from this curiosity. I wanted to create furniture and objects
+                  that were not simply designed to fill a space, but had a presence of
+                  their own. Pieces where the material, the making, and the details
+                  could be appreciated, and where the process of creating was as
+                  important as the final object.
+                </p>
+                <p>
+                  The name Now &amp; Then came from this way of thinking. &ldquo;Now&rdquo;
+                  represents the excitement of an idea taking shape–the sketches,
+                  conversations, experiments, and making. &ldquo;Then&rdquo; is what happens
+                  after: when the piece leaves the studio, enters someone&apos;s space,
+                  and begins a life of its own. What started as an idea has gradually
+                  evolved into a studio working with designers, craftsmen, and
+                  manufacturers across the country. With every project, the
+                  understanding of what Now &amp; Then can be continues to grow.
+                  The journey is still evolving. And perhaps that is what Now &amp; Then
+                  is ultimately about–creating in the present, while knowing that
+                  time will give each piece a story of its own.
+                </p>
+              </div>
+            </div>
+
+            {/* Image 2: Handcrafted Console Table (Aligned Right) */}
+            <div className="w-full sm:w-[88%] md:w-[72%] lg:w-[62%] self-end ml-auto mb-24 sm:mb-28 md:mb-36 aspect-[16/10] sm:aspect-[16/10] relative overflow-hidden bg-[#e5e5e5] shadow-sm">
+              <AppImage
+                src={IMAGES.about.console}
+                fallbackSrc={IMAGES.products.product2}
+                alt="Now & Then Handcrafted Console Table"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 750px"
+                className="object-cover"
+              />
+            </div>
+
+            {/* 3. Our Team (Aligned Left) */}
+            <div className="w-full sm:w-[88%] md:w-[72%] lg:w-[62%] self-start text-left mb-16 sm:mb-20 md:mb-24">
+              <h2 className="text-2xl sm:text-3xl md:text-[32px] font-normal text-neutral-900 mb-6 sm:mb-8 tracking-tight text-left">
+                Our Team
+              </h2>
+              <div className="space-y-6 text-xs sm:text-sm md:text-[15px] leading-relaxed text-neutral-800 text-left font-sans">
+                <p>
+                  Behind Now &amp; Then is a growing team of designers, makers, and
+                  craftsmen who bring different skills, perspectives, and
+                  experiences to every project. We believe good design is a
+                  collective process. From the first idea and drawings to material
+                  selection, making, and finishing, each person contributes to
+                  shaping the final piece. Working closely with designers, artisans,
+                  and manufacturing partners across the country, our team brings
+                  together creative thinking and skilled making to turn ideas into
+                  objects that are made to last.
+                </p>
+              </div>
+            </div>
+
+            {/* Image 3: Team / Workshop Photo (Aligned Left) */}
+            <div className="w-full sm:w-[88%] md:w-[72%] lg:w-[62%] self-start mb-24 sm:mb-28 md:mb-36 aspect-[4/3] sm:aspect-[16/10] relative overflow-hidden bg-[#e5e5e5] shadow-sm">
+              <AppImage
+                src={IMAGES.about.team}
+                fallbackSrc={IMAGES.about.hero}
+                alt="Now & Then Team & Making"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 750px"
+                className="object-cover"
+              />
+            </div>
+
+            {/* 4. Founder (Shifted Right / Indented) */}
+            <div className="w-full sm:w-[88%] md:w-[72%] lg:w-[62%] self-end ml-auto text-left mb-16 sm:mb-20 md:mb-28">
+              <h2 className="text-2xl sm:text-3xl md:text-[32px] font-normal text-neutral-900 mb-6 sm:mb-8 tracking-tight text-left">
+                Founder
+              </h2>
+              <div className="space-y-6 text-xs sm:text-sm md:text-[15px] leading-relaxed text-neutral-800 text-left font-sans">
+                <p>
+                  Now &amp; Then, founded by Architect Nihal Musthafa, is rooted in a
+                  reflection on time and the act of creation–the relationship
+                  between what is created now and what it becomes then. &ldquo;Now&rdquo; is
+                  the moment where an idea takes form; where materials are
+                  shaped, decisions are made, and something begins to exist. &ldquo;Then&rdquo;
+                  is what follows–the object, the experience, and the story that
+                  unfolds with time. At Now &amp; Then, this passage of time is an
+                  essential part of the design process. Each piece begins as an idea
+                  in the present, brought to life through considered design, material,
+                  and craftsmanship, while being imagined for a future where it can
+                  acquire its own character and meaning. We create pieces that
+                  belong to the present, while allowing time to become part of their
+                  story. The philosophy extends beyond furniture. It is an exploration
+                  of how an idea becomes an object, how an object becomes part of
+                  a space, and how, with time, it becomes part of someone&apos;s story.
+                  Now &amp; Then creates contemporary pieces with an appreciation
+                  for craft, materiality, and permanence–objects designed not only
+                  to exist today, but to become something more with time.
+                </p>
+              </div>
             </div>
           </div>
+        </section>
 
-          {/* Evolution Section */}
-          <div className="text-center mb-24 max-w-2xl mx-auto space-y-6">
-            <h2 className="text-lg md:text-xl font-medium mb-8">Evolution</h2>
-            <p className="text-sm md:text-base text-gray-800 leading-relaxed">
-              Phantom Hands began in 2014 as a monthly catalogue of vintage
-              objects, researched and curated by Aparna Rao and{" "}
-              <Link href="#" className="underline underline-offset-2">
-                Deepak Srinath
-              </Link>
-              .
-            </p>
-            <p className="text-sm md:text-base text-gray-800 leading-relaxed">
-              In their quest to find heirloom design with a high standard of
-              craftsmanship, Aparna and Deepak stumbled onto design histories of
-              the cosmopolitan modernism that defined the early years of
-              independent India.
-            </p>
-            <p className="text-sm md:text-base text-gray-800 leading-relaxed">
-              Being more inclined towards furniture in which simplicity,
-              proportion, and the logic of construction stood out, they were
-              fascinated when they encountered the modernist furniture made for
-              the city of Chandigarh in the 1950s. This fascination sparked the
-              idea of remaking those designs, which opened the doors to a much
-              deeper exploration of the intersection between modernist design
-              and craft traditions.
-            </p>
-            <p className="text-sm md:text-base text-gray-800 leading-relaxed">
-              Today, Phantom Hands' products—a mix of original collections, as
-              well as re-editions of designs by iconic South Asian modernists
-              like Geoffrey Bawa—are seen in several international design
-              spaces, as well as in the homes of discerning aesthetes around the
-              world.
-            </p>
-          </div>
-
-          {/* Image + Caption 2 (Reversed) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full mb-24">
-            <div className="order-2 md:order-1 text-center md:text-right flex justify-end">
-              <p className="text-xs md:text-sm text-gray-600 leading-relaxed max-w-xs mx-auto md:mx-0 md:ml-auto">
-                Image caption: Chairs from Phantom Hands' first collection of
-                furniture. Project Chandigarh.
-                <br />
-                Image courtesy: Martien Mulder.
-              </p>
-            </div>
-            <div className="order-1 md:order-2 h-[300px] md:h-[400px] bg-[#e5e5e5] relative w-full">
-              {/* <Image src="/placeholder-2.jpg" alt="Chairs collection" fill className="object-cover" /> */}
-            </div>
-          </div>
-
-          {/* First Collection Section */}
-          <div className="text-center mb-24 max-w-2xl mx-auto space-y-6">
-            <h2 className="text-lg md:text-xl font-medium mb-8">
-              First Collection
+        {/* Artisanal Quality Statement Banner (Above Footer) */}
+        <section className="w-full bg-black text-white py-20 sm:py-24 md:py-32 lg:py-36 px-6 md:px-12 lg:px-20">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-light leading-snug md:leading-normal tracking-wide text-white">
+              Artisanal Quality: Each furniture piece is
+              <br className="hidden sm:inline" />{" "}
+              meticulously handcrafted.
             </h2>
-            <p className="text-sm md:text-base text-gray-800 leading-relaxed">
-              Aparna and Deepak's curiosity about the{" "}
-              <Link href="#" className="underline underline-offset-2">
-                authorship and copyright
-              </Link>{" "}
-              of Chandigarh's mid-century modern furniture was driven by the
-              intent to have their offerings be completely above board. Their
-              search for these took them on a journey from Chandigarh to Geneva,
-              via Montreal and Paris.
-            </p>
-            <p className="text-sm md:text-base text-gray-800 leading-relaxed">
-              What emerged from this expedition was revealing. Though often
-              attributed to Pierre Jeanneret, the pieces had been developed in
-              the collaborative design office he led, and were produced in a
-              number of local workshops, shaped by the material and skills
-              available at the time. Further, the designs had been freely
-              adapted for various situations and evolved over a thirty year
-              period, going beyond Chandigarh to several parts of Northern India
-              and even as far as government offices in Bangalore.
-            </p>
-            <p className="text-sm md:text-base text-gray-800 leading-relaxed">
-              With the newfound understanding that this furniture was the
-              product of an open, craft-based process, Aparna and Deepak decided
-              to continue in this tradition, and set up a workshop in their
-              hometown, Bangalore.
-            </p>
-            <p className="text-sm md:text-base text-gray-800 leading-relaxed">
-              <Link href="#" className="underline underline-offset-2">
-                Project Chandigarh
-              </Link>
-              , Phantom Hands' first furniture collection, was launched in May,
-              2015. What began as three chair models soon expanded to
-              re-editions of several pieces.
-            </p>
           </div>
-
-          {/* Image + Caption 3 */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full mb-24">
-            <div className="h-[300px] md:h-[400px] bg-[#e5e5e5] relative w-full">
-              {/* <Image src="/placeholder-3.jpg" alt="Meeting designers" fill className="object-cover" /> */}
-            </div>
-            <div className="text-center md:text-left">
-              <p className="text-xs md:text-sm text-gray-600 leading-relaxed max-w-xs mx-auto md:mx-0">
-                Image caption: The first meeting between Phantom Hands founder
-                Deepak Srinath and designers Kyoko Inoda and Nils Sveje at their
-                studio in Milan (2017).
-              </p>
-            </div>
-          </div>
-
-          {/* Design Collaborations Section */}
-          <div className="text-center mb-24 max-w-2xl mx-auto space-y-6">
-            <h2 className="text-lg md:text-xl font-medium mb-8">
-              Design Collaborations
-            </h2>
-            <p className="text-sm md:text-base text-gray-800 leading-relaxed">
-              Since 2017, Phantom Hands has collaborated with contemporary
-              designers such as INODA+SVEJE, x + l, Derek Welsh, Padmaja
-              Krishnan, Klemens Grund, Nityan Unnikrishnan, BIG-GAME, Felix
-              Pfäffli and others to create collections of original design. In
-              parallel, we continue our in-depth engagement with South Asian
-              modernism. Our most recent partnership was with the Geoffrey Bawa
-              Trust, with whom we worked to create a collection of the Sri
-              Lankan master’s fiercely contextual furniture designs. All our
-              collections draw from the philosophy of cosmopolitan modernism
-              that emerged in the subcontinent in the mid-20th century, and
-              build on the vast bank of material intelligence that traditional
-              Indian craftsmanship offers. Today, Phantom Hands is a design and
-              craft collective of more than 100 artisans who specialise in
-              carpentry, wood finishing, cane weaving, upholstery, and metal
-              work
-            </p>
-          </div>
-        </div>
-      </section>
-    </main>
-
+        </section>
+      </main>
     </>
   );
 }

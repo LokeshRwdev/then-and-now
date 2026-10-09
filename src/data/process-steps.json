@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "sequence": "01",
+    "stepNumber": "1",
+    "heading": "Design Specifications",
+    "subheading": "1 Week",
+    "paragraph": "Provide detailed specifications, drawings, dimensions and materials to our team. Stellar Works can quote all upholstered, non-upholstered, case goods FF&E.",
+    "image": "/images/process/01.png"
+  },
+  {
+    "id": 2,
+    "sequence": "02",
+    "stepNumber": "2",
+    "heading": "Quotation",
+    "subheading": "1 Week",
+    "paragraph": "Transparent quotation detailing comprehensive material breakdowns, engineering timelines, and logistics tailored to your bespoke requirements.",
+    "image": "/images/process/02.png"
+  },
+  {
+    "id": 3,
+    "sequence": "03",
+    "stepNumber": "3",
+    "heading": "Order Placement",
+    "subheading": "1 Week",
+    "paragraph": "Upon approval, initial orders are confirmed, raw hardwood timber lots are allocated, and your project is scheduled for production.",
+    "image": "/images/process/03.png"
+  },
+  {
+    "id": 4,
+    "sequence": "04",
+    "stepNumber": "4",
+    "heading": "Shop Drawings & Material Samples",
+    "subheading": "2-3 Weeks",
+    "paragraph": "Production engineering shop drawings and tactile physical material swatches are prepared for final client verification and approval.",
+    "image": "/images/process/04.png"
+  },
+  {
+    "id": 5,
+    "sequence": "05",
+    "stepNumber": "5",
+    "heading": "Client Review Process",
+    "subheading": "1-2 Weeks",
+    "paragraph": "Collaborative checkpoint ensuring joinery accuracy, ergonomics, and material fidelity align with architectural intent.",
+    "image": "/images/process/05.png"
+  },
+  {
+    "id": 6,
+    "sequence": "06",
+    "stepNumber": "6",
+    "heading": "Prototype Production (if required)",
+    "subheading": "3-4 Weeks",
+    "paragraph": "For complex or entirely custom designs, a full-scale prototype is fabricated to test ergonomic performance, balance, and joinery strength.",
+    "image": "/images/process/06.png"
+  },
+  {
+    "id": 7,
+    "sequence": "07",
+    "stepNumber": "7",
+    "heading": "Full Coat Production",
+    "subheading": "6-8 Weeks",
+    "paragraph": "Comprehensive fabrication, hand-sanding, master artisan assembly, and application of durable multi-layer signature protective finishes.",
+    "image": "/images/process/07.png"
+  },
+  {
+    "id": 8,
+    "sequence": "08",
+    "stepNumber": "8",
+    "heading": "Transport",
+    "subheading": "1-2 Weeks",
+    "paragraph": "Meticulous protective packing and reinforced custom export crating for secure transit across domestic and international routes.",
+    "image": "/images/process/08.png"
+  },
+  {
+    "id": 9,
+    "sequence": "09",
+    "stepNumber": "9",
+    "heading": "Delivery",
+    "subheading": "1-2 Days",
+    "paragraph": "Direct white-glove site delivery, careful uncrating, room placement, and complete removal of all packaging materials.",
+    "image": "/images/process/09.png"
+  },
+  {
+    "id": 10,
+    "sequence": "10",
+    "stepNumber": "10",
+    "heading": "Post-Delivery",
+    "subheading": "Ongoing",
+    "paragraph": "Dedicated post-installation follow-up, care and maintenance guides, warranty coverage, and long-term customer assistance.",
+    "image": "/images/process/10.png"
+  }
+]

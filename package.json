@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "node ./node_modules/next/dist/bin/next dev",
+    "dev:clean": "npm run clean && npm run dev",
+    "clean": "node -e \"require('fs').rmSync('.next/cache', {recursive: true, force: true})\"",
+    "clean:images": "node -e \"require('fs').rmSync('.next/cache/images', {recursive: true, force: true})\"",
     "build": "node ./node_modules/next/dist/bin/next build",
     "start": "node ./node_modules/next/dist/bin/next start",
     "lint": "eslint"

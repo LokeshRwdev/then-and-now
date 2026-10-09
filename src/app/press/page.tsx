@@ -1,5 +1,6 @@
 import PageBanner from "@/components/layout/PageBanner";
-import Image from "next/image";
+import AppImage from "@/components/ui/AppImage";
+import { IMAGES } from "@/lib/images";
 import Link from "next/link";
 
 // Dummy data for the grid
@@ -18,6 +19,7 @@ export default function PressPage() {
         <PageBanner 
           title="Stories" 
           subtitle="NOW & THEN COLLECTION" 
+          imageSrc={IMAGES.hero.home}
           bgColor="bg-[#e5e5e5]" 
         />
 
@@ -27,9 +29,15 @@ export default function PressPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
               {stories.map((story) => (
                 <article key={story.id} className="flex flex-col group cursor-pointer">
-                  {/* Image Placeholder */}
+                  {/* Image Container */}
                   <div className="w-full aspect-[3/4] bg-[#e5e5e5] mb-6 relative overflow-hidden">
-                    {/* <Image src={`/placeholder-story-${story.id}.jpg`} alt="Story Image" fill className="object-cover group-hover:scale-105 transition-transform duration-500" /> */}
+                    <AppImage 
+                      src={story.image} 
+                      alt={story.title} 
+                      fill 
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500" 
+                    />
                   </div>
                   
                   {/* Text Content */}
