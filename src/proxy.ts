@@ -46,12 +46,18 @@ export async function proxy(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   const isDashboardRoute = request.nextUrl.pathname.startsWith('/dashboard')
+  const isAdminRoute = request.nextUrl.pathname.startsWith('/admin')
+  const isAdminApi = request.nextUrl.pathname.startsWith('/api/admin') || request.nextUrl.pathname.startsWith('/api/upload')
   
-  if (isDashboardRoute && !user) {
-    // Redirect unauthenticated users trying to access dashboard to login
+  if ((isDashboardRoute || isAdminRoute) && !user) {
+    // Protect the admin interface before it can call the service-role API.
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
+  }
+
+  if (isAdminApi && !user) {
+    return NextResponse.json({ error: 'Authentication required.' }, { status: 401 })
   }
 
   return supabaseResponse

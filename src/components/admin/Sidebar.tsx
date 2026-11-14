@@ -5,11 +5,16 @@ export default function Sidebar() {
   return (
     <aside className="w-64 bg-gray-900 text-white flex flex-col h-full border-r border-gray-800">
       <div className="p-6 border-b border-gray-800">
-        <h2 className="text-xl font-bold tracking-wider uppercase">T&N Admin</h2>
+        <h2 className="text-xl font-bold tracking-wider uppercase">N&T Admin</h2>
       </div>
       
       <nav className="flex-1 overflow-y-auto py-4">
         <ul className="space-y-1 px-3">
+          <li>
+            <Link href="/admin" className="flex items-center gap-3 px-3 py-2 rounded-md bg-white/10 hover:bg-white/20 text-white transition-colors text-sm font-semibold border border-white/20">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> Live Visual Studio
+            </Link>
+          </li>
           <li>
             <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 transition-colors text-sm font-medium">
               <Home size={18} /> Overview

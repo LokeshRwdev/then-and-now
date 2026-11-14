@@ -1,23 +1,49 @@
 import PageBanner from '@/components/layout/PageBanner';
 import ProductCard from '@/components/products/ProductCard';
 import { getDisplayProducts } from '@/lib/products';
+import { getPageSections, getProducts } from '@/lib/content/contentService';
 import { IMAGES } from '@/lib/images';
+import { getCategoryBySlug } from '@/lib/supabase/categories';
 
-export default function LightsPage() {
-  const displayProducts = getDisplayProducts(12);
+export const dynamic = 'force-dynamic';
+
+export default async function LightsPage() {
+  const [sections, dbProducts, category] = await Promise.all([
+    getPageSections('lights'),
+    getProducts('light'),
+    getCategoryBySlug('light'),
+  ]);
+
+  const heroBanner = sections.find((s) => s.section_key === 'hero');
+  const fallbackDisplayProducts = getDisplayProducts(12);
+
+  // If db has light products, use them, otherwise use default showcase list
+  const displayProducts = dbProducts && dbProducts.length > 0
+    ? dbProducts.map((p: any, i: number) => ({
+        gridKey: `db-light-${p.id || i}`,
+        id: p.id,
+        title: p.title,
+        slug: p.slug,
+        tag: p.tag || (i % 2 === 0 ? 'HOME' : 'RESTAURANT'),
+        shortDescription: p.short_description || p.shortDescription || '',
+        imageUrl: p.image_url || p.page_data?.heroImage || p.image || IMAGES.hero.lights,
+        fallbackSrc: IMAGES.hero.lights,
+        buttonText: p.button_text || p.buttonText || 'REQUEST PRICE',
+      }))
+    : fallbackDisplayProducts;
 
   return (
     <>
       <main className="flex min-h-screen flex-col bg-brand-bg text-brand-text">
         <PageBanner 
-          title="Lights" 
-          imageSrc={IMAGES.hero.lights} 
+          title={heroBanner?.title || "Lights"} 
+          imageSrc={category?.thumbnail_url || heroBanner?.image_url || IMAGES.hero.lights} 
         />
 
-        {/* Product Grid - Identical showcase grid matching Objects */}
+        {/* Product Grid */}
         <section className="w-full pb-32">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-0 border-t border-black/10">
-            {displayProducts.map((product) => (
+            {displayProducts.map((product: any) => (
               <ProductCard 
                 key={product.gridKey} 
                 id={product.id}
@@ -25,8 +51,8 @@ export default function LightsPage() {
                 slug={product.slug}
                 tag={product.tag}
                 shortDescription={product.shortDescription}
-                imageUrl={product.image}
-                fallbackSrc={product.fallbackImage}
+                imageUrl={product.imageUrl}
+                fallbackSrc={product.fallbackSrc}
                 buttonText={product.buttonText}
               />
             ))}

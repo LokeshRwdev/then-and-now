@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Admin Dashboard | Then & Now',
+  title: 'Admin Dashboard | Now & Then',
   description: 'Manage website content',
 };
 
@@ -21,7 +21,7 @@ export default function DashboardLayout({
         <header className="h-16 bg-white border-b border-gray-200 flex items-center px-8">
           <h1 className="text-xl font-semibold">Dashboard</h1>
         </header>
-        <main className="flex-1 overflow-y-auto p-8">
+        <main className="flex-1 overflow-y-auto">
           {children}
         </main>
       </div>

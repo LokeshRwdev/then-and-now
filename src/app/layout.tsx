@@ -13,7 +13,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Then & Now | Furniture & Interiors",
+  title: "Now & Then | Furniture & Interiors",
   description: "Modern manufacture furniture. We craft enduring objects.",
 };
 

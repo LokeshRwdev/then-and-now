@@ -1,6 +1,6 @@
 # Image Assets Directory (`public/images`)
 
-This folder contains all static image assets for the **THEN & NOW** application.
+This folder contains all static image assets for the **NOW & THEN** application.
 
 Files placed here are directly served by Next.js from `/images/<subfolder>/<filename>`.
 

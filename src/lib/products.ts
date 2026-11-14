@@ -26,6 +26,11 @@ export interface ProductPageData {
   longDescription?: string;
   specs?: ProductSpecs;
   gallery?: ProductGallery;
+  galleryDescription?: string;
+  featureHeading?: string;
+  featureDescription?: string;
+  detailHeading?: string;
+  detailDescription?: string;
 }
 
 export interface ProductItem {

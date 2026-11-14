@@ -58,7 +58,11 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 lg:px-20 py-8 mix-blend-difference text-white pointer-events-none">
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 lg:px-20 py-8 pointer-events-none transition-colors duration-200 ${
+          isOpen ? "text-white" : "text-black"
+        }`}
+      >
         <div className="pointer-events-auto">
           <Link
             href="/"
@@ -72,10 +76,14 @@ export default function Header() {
               width={170}
               height={64}
               priority
-              className="h-5 md:h-6 w-auto object-contain invert group-hover:opacity-80 transition-opacity"
+              className={`h-5 md:h-6 w-auto object-contain group-hover:opacity-80 transition-all duration-200 ${
+                isOpen ? "invert sm:invert-0" : ""
+              }`}
             />
             <span
               className={`flex flex-col text-xs md:text-sm font-sans lowercase font-normal leading-[1.15] tracking-tight group-hover:opacity-80 transition-all duration-300 ease-out overflow-hidden ${
+                isOpen ? "text-white sm:text-black" : "text-black"
+              } ${
                 isScrolled
                   ? "max-h-0 opacity-0 -translate-y-1 pointer-events-none mt-0"
                   : "max-h-12 opacity-100 translate-y-0 mt-1"
@@ -89,7 +97,9 @@ export default function Header() {
         <div className="pointer-events-auto">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="text-xs md:text-sm font-semibold tracking-widest uppercase focus:outline-none cursor-pointer"
+            className={`text-xs md:text-sm font-semibold tracking-widest uppercase focus:outline-none cursor-pointer transition-colors duration-200 ${
+              isOpen ? "text-white" : "text-black"
+            }`}
           >
             Menu {isOpen ? "−" : "+"}
           </button>
@@ -152,6 +162,17 @@ export default function Header() {
                 )}
               </div>
             ))}
+
+            <div className="pt-8 border-t border-white/10 w-full flex justify-center">
+              <Link
+                href="/admin"
+                className="text-xs font-mono tracking-widest text-neutral-400 hover:text-white uppercase transition-colors flex items-center gap-2"
+                onClick={() => setIsOpen(false)}
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Admin Studio (/admin)
+              </Link>
+            </div>
           </nav>
         </div>
       </div>

@@ -10,7 +10,7 @@ export default async function ProductsPage() {
     .order("created_at", { ascending: false });
 
   return (
-    <div className="space-y-6">
+    <div className="p-8 space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Products</h2>
         <Link

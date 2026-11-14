@@ -1,6 +1,6 @@
 # Products Images Directory (`public/images/products`)
 
-This folder contains product photography for the **THEN & NOW** catalogue.
+This folder contains product photography for the **NOW & THEN** catalogue.
 
 ## 5 Unique Showcase Products
 

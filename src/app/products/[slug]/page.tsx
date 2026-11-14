@@ -1,9 +1,13 @@
 import Link from "next/link";
+import { Edit2 } from "lucide-react";
 import PageBanner from "@/components/layout/PageBanner";
 import AppImage from "@/components/ui/AppImage";
 import { IMAGES } from "@/lib/images";
 import { getProductBySlug, getUniqueProducts } from "@/lib/products";
 import { getProductBySlug as getSupabaseProductBySlug } from "@/lib/supabase/products";
+import { createClient } from "@/lib/supabase/server";
+
+export const dynamic = 'force-dynamic';
 
 export function generateStaticParams() {
   const products = getUniqueProducts();
@@ -22,34 +26,55 @@ export default async function ProductPage({
   const resolvedParams = await params;
   const slug = resolvedParams.slug;
 
-  // 1. Try local JSON catalogue first (fast, offline-first & user editable)
+  const supabase = await createClient();
+  const { data: authData } = await supabase.auth.getUser();
+  const isAdmin = Boolean(authData?.user);
+
+  // Prefer saved catalog content so product images and copy come from Supabase.
   const localProduct = getProductBySlug(slug);
 
-  // 2. Try Supabase as secondary fallback if not in JSON
-  let supabaseProduct = null;
-  if (!localProduct) {
-    supabaseProduct = await getSupabaseProductBySlug(slug);
-  }
+  const supabaseProduct = await getSupabaseProductBySlug(slug);
+
+  const heroImage =
+    supabaseProduct?.page_data?.heroImage ||
+    supabaseProduct?.image_url ||
+    localProduct?.pageData?.heroImage ||
+    localProduct?.image ||
+    IMAGES.hero.products;
 
   // 3. Graceful fallback if neither found
-  const product = localProduct || {
-    id: supabaseProduct?.id || "default",
-    title: supabaseProduct?.title || slug.replace(/-/g, " ").toUpperCase(),
+  const product = supabaseProduct ? {
+    id: supabaseProduct.id,
+    title: supabaseProduct.title,
+    slug,
+    tag: supabaseProduct.tag || 'COLLECTION',
+    category: supabaseProduct.category || 'object',
+    image: heroImage,
+    fallbackImage: heroImage,
+    shortDescription: supabaseProduct.short_description || '',
+    buttonText: supabaseProduct.button_text || 'REQUEST PRICE',
+    pageData: {
+      ...(localProduct?.pageData || {}),
+      ...(supabaseProduct.page_data || {}),
+      heroImage: heroImage,
+      longDescription: supabaseProduct.long_description || supabaseProduct.page_data?.longDescription || localProduct?.pageData?.longDescription || '',
+      specs: { ...(localProduct?.pageData?.specs || {}), ...(supabaseProduct.page_data?.specs || {}) },
+      gallery: { ...(localProduct?.pageData?.gallery || {}), ...(supabaseProduct.page_data?.gallery || {}) },
+    },
+  } : localProduct || {
+    id: "default",
+    title: slug.replace(/-/g, " ").toUpperCase(),
     slug: slug,
     tag: "COLLECTION",
-    category: supabaseProduct?.category || "object",
-    image: supabaseProduct?.image_url || IMAGES.hero.products,
+    category: "object",
+    image: IMAGES.hero.products,
     fallbackImage: IMAGES.hero.products,
-    shortDescription: supabaseProduct?.short_description || "",
+    shortDescription: "",
     buttonText: "REQUEST PRICE",
     pageData: {
-      // heroSubtitle: 'NOW & THEN COLLECTION',
       heroImage: "",
-      secondaryHeading: `${supabaseProduct?.title || slug.toUpperCase()}`,
-      longDescription:
-        supabaseProduct?.long_description ||
-        supabaseProduct?.short_description ||
-        "",
+      secondaryHeading: slug.toUpperCase(),
+      longDescription: "",
       specs: {
         year: "2024",
         materials: "Solid Teak, Rosewood & Indian Laurel",
@@ -60,7 +85,7 @@ export default async function ProductPage({
   };
 
   const title = product.title;
-  const pageData = product.pageData || {};
+  const pageData: any = product.pageData || {};
   const specs = pageData.specs || {
     year: "2024",
     materials: "Solid Teak, Rosewood & Indian Laurel",
@@ -144,7 +169,7 @@ export default async function ProductPage({
                 type="button"
                 className="w-full mt-2 py-3.5 border border-black/30 font-semibold text-black uppercase text-xs tracking-widest hover:bg-black hover:text-white transition-colors duration-200"
               >
-                REQUEST PRICE
+                {product.buttonText || "REQUEST PRICE"}
               </button>
             </div>
           </div>
@@ -169,10 +194,7 @@ export default async function ProductPage({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-start">
               <div className="md:col-span-1 pt-2">
                 <p className="text-xs md:text-sm text-neutral-600 leading-relaxed font-sans">
-                  Crafted from solid rosewood, this tabletop celebrates
-                  centuries-old Indian woodcraft traditions. The joinery works
-                  every detail to celebrate timber in every grain, using no
-                  artificial stains or fillers.
+                  {pageData.galleryDescription || "Crafted from solid rosewood, this tabletop celebrates centuries-old Indian woodcraft traditions. The joinery works every detail to celebrate timber in every grain, using no artificial stains or fillers."}
                 </p>
               </div>
               <div className="md:col-span-1 aspect-square sm:aspect-[3/4] bg-[#e5e5e5] relative overflow-hidden">
@@ -201,14 +223,14 @@ export default async function ProductPage({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-start">
               <div className="md:col-span-1 pt-2 flex flex-col gap-3">
                 <h4 className="text-sm font-semibold uppercase tracking-wider text-neutral-900">
-                  Prototyping & Positioning
+                  {pageData.featureHeading || "Prototyping & Positioning"}
                 </h4>
                 <p className="text-xs md:text-sm text-neutral-600 leading-relaxed font-sans">
-                  Before working on the final tabletop, we build mockups to
+                  {pageData.featureDescription || `Before working on the final tabletop, we build mockups to
                   study form, balance, and proportions. This allows us to
                   calibrate both the leg positions, ensuring stability is
                   structurally sound while maintaining its iconic sculptural
-                  form.
+                  form.`}
                 </p>
               </div>
               <div className="md:col-span-2 aspect-[4/3] md:aspect-[16/11] bg-[#e5e5e5] relative overflow-hidden">
@@ -241,16 +263,16 @@ export default async function ProductPage({
               <div className="flex flex-col gap-8 md:gap-10">
                 <div className="flex flex-col gap-3 pt-2">
                   <h4 className="text-sm font-semibold uppercase tracking-wider text-neutral-900">
-                    Template Making
+                  {pageData.detailHeading || "Template Making"}
                   </h4>
                   <p className="text-xs md:text-sm text-neutral-600 leading-relaxed font-sans">
-                    Every initial project begins with precision templates to
+                    {pageData.detailDescription || `Every initial project begins with precision templates to
                     accurately capture the profile and layout of each joinery
                     piece across the tabletop. We carefully orient timber grain,
                     rosewood, and teakwood, allowing their natural contours,
                     grain, and character to radiate without adding artificial
                     stains—setting the foundation for the craftsmanship that
-                    follows.
+                    follows.`}
                   </p>
                 </div>
 
@@ -309,6 +331,19 @@ export default async function ProductPage({
             </div>
           </div>
         </section>
+
+        {/* Floating Visual Studio Edit Button (Visible to Authenticated Admins) */}
+        {isAdmin && product.id && (
+          <aside className="fixed bottom-6 left-6 z-50">
+            <Link
+              href={`/dashboard/products/${product.id}`}
+              className="flex items-center gap-2 bg-neutral-900/95 hover:bg-black text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-2xl backdrop-blur-md border border-white/20 transition-transform hover:scale-105"
+            >
+              <Edit2 size={13} className="text-amber-400" />
+              <span>Edit In Visual Studio</span>
+            </Link>
+          </aside>
+        )}
       </main>
     </>
   );

@@ -1,60 +1,36 @@
-import { login } from './actions'
+import React from 'react';
+import LoginForm from './LoginForm';
+import Link from 'next/link';
 
-export default async function LoginPage(props: { searchParams: Promise<{ message: string }> }) {
+export default async function LoginPage(props: { searchParams: Promise<{ message?: string }> }) {
   const searchParams = await props.searchParams;
-  
-  return (
-    <div className="flex h-screen w-full items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-10 shadow-lg">
-        <div className="text-center">
-          <h2 className="mt-6 text-3xl font-extrabold text-gray-900">Admin Login</h2>
-          <p className="mt-2 text-sm text-gray-600">Sign in to manage the website content</p>
-        </div>
-        
-        <form className="mt-8 space-y-6" action={login}>
-          {searchParams?.message && (
-            <div className="rounded-md bg-red-50 p-4 text-sm text-red-700">
-              {searchParams.message}
-            </div>
-          )}
-          
-          <div className="space-y-4 rounded-md shadow-sm">
-            <div>
-              <label htmlFor="email" className="sr-only">Email address</label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                placeholder="Email address"
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">Password</label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                placeholder="Password"
-              />
-            </div>
-          </div>
 
-          <div>
-            <button
-              type="submit"
-              className="group relative flex w-full justify-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-            >
-              Sign in
-            </button>
+  return (
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-[#F7F6F3] px-4 py-12">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-neutral-200/80 p-8 sm:p-10">
+        <div className="text-center">
+          <Link
+            href="/"
+            className="font-serif text-2xl tracking-wider uppercase font-semibold text-neutral-900 block mb-2"
+          >
+            Now &amp; Then
+          </Link>
+          <div className="inline-block bg-neutral-100 text-neutral-700 text-[10px] font-mono uppercase px-2.5 py-0.5 rounded tracking-widest font-semibold border border-neutral-200 mb-4">
+            Admin Studio
           </div>
-        </form>
+          <p className="text-xs text-neutral-500">
+            Sign in with your admin credentials to manage content and catalog
+          </p>
+        </div>
+
+        <LoginForm initialMessage={searchParams?.message} />
+
+        <div className="mt-8 pt-6 border-t border-neutral-100 text-center text-[11px] text-neutral-400">
+          <Link href="/" className="hover:text-neutral-900 transition-colors">
+            &larr; Return to public website
+          </Link>
+        </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,25 +1,23 @@
 import PageBanner from "@/components/layout/PageBanner";
 import AppImage from "@/components/ui/AppImage";
 import { IMAGES } from "@/lib/images";
-import Link from "next/link";
+import { getStories, getPageSections } from "@/lib/content/contentService";
 
-// Dummy data for the grid
-const stories = Array.from({ length: 12 }).map((_, i) => ({
-  id: i,
-  image: "https://images.unsplash.com/photo-1550136513-548af4445338?q=80&w=800&auto=format&fit=crop", // Replace with your actual image links
-  title: "Design Specifications\nDesign Specifications",
-  subtitle: "Home",
-  description: "Provide detailed specifications, drawings, dimensions, and materials to our team. Stellar Works can quote all upholstered, non-upholstered, case goods FF&E."
-}));
+export default async function PressPage() {
+  const [sections, stories] = await Promise.all([
+    getPageSections('press'),
+    getStories(),
+  ]);
 
-export default function PressPage() {
+  const heroSection = sections.find((s) => s.section_key === 'hero');
+
   return (
     <>
       <main className="min-h-screen bg-white">
         <PageBanner 
-          title="Stories" 
-          subtitle="NOW & THEN COLLECTION" 
-          imageSrc={IMAGES.hero.home}
+          title={heroSection?.title || "Stories"} 
+          subtitle={heroSection?.subtitle || "NOW & THEN COLLECTION"} 
+          imageSrc={heroSection?.image_url || IMAGES.hero.home}
           bgColor="bg-[#e5e5e5]" 
         />
 
@@ -27,12 +25,12 @@ export default function PressPage() {
         <section className="py-24 px-6 md:px-12 lg:px-24">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-              {stories.map((story) => (
+              {stories.map((story: any) => (
                 <article key={story.id} className="flex flex-col group cursor-pointer">
                   {/* Image Container */}
                   <div className="w-full aspect-[3/4] bg-[#e5e5e5] mb-6 relative overflow-hidden">
                     <AppImage 
-                      src={story.image} 
+                      src={story.image_url || story.image || IMAGES.placeholders.default} 
                       alt={story.title} 
                       fill 
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -46,10 +44,10 @@ export default function PressPage() {
                       {story.title}
                     </h2>
                     <p className="text-xs font-semibold text-gray-900 uppercase tracking-wider">
-                      {story.subtitle}
+                      {story.subtitle || 'COLLECTION ARCHIVE'}
                     </p>
                     <p className="text-xs md:text-sm text-gray-700 leading-relaxed mt-1">
-                      {story.description}
+                      {story.content || story.description}
                     </p>
                   </div>
                 </article>
@@ -58,7 +56,6 @@ export default function PressPage() {
           </div>
         </section>
       </main>
-
     </>
   );
 }
