@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, Lock, Mail, Loader2 } from 'lucide-react';
 import { login } from './actions';
+import { dispatchGlobalLoader } from '@/components/ui/GlobalLoader';
 
 interface LoginFormProps {
   initialMessage?: string;
@@ -12,17 +13,38 @@ export default function LoginForm({ initialMessage }: LoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // If redirected back with error message, clear any active loaders
+  useEffect(() => {
+    if (initialMessage) {
+      setIsSubmitting(false);
+      dispatchGlobalLoader(false);
+    }
+  }, [initialMessage]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    dispatchGlobalLoader(true, 'Signing in...');
+
+    const formData = new FormData(e.currentTarget);
+    try {
+      await login(formData);
+    } catch (err: any) {
+      // In Next.js, redirect() intentionally throws an error starting with NEXT_REDIRECT
+      if (err?.message?.includes('NEXT_REDIRECT') || err?.digest?.includes('NEXT_REDIRECT')) {
+        // Keep the button and global loader active while browser navigates
+        return;
+      }
+      console.error('Sign-in error:', err);
+      setIsSubmitting(false);
+      dispatchGlobalLoader(false);
+    }
+  };
+
   return (
     <form
       className="mt-8 space-y-6"
-      action={async (formData) => {
-        setIsSubmitting(true);
-        try {
-          await login(formData);
-        } finally {
-          setIsSubmitting(false);
-        }
-      }}
+      onSubmit={handleSubmit}
     >
       {initialMessage && (
         <div className="rounded-md bg-red-50 border border-red-200 p-3.5 text-xs text-red-700 leading-relaxed animate-in fade-in">

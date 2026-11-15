@@ -1,7 +1,18 @@
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { Package, Home, LayoutList, BookOpen, Layers, MessageSquare, Settings, LogOut } from 'lucide-react';
+import { Package, Home, LayoutList, BookOpen, Layers, MessageSquare, Settings, LogOut, Loader2 } from 'lucide-react';
+import { performSignOut } from '@/lib/auth/signOut';
 
 export default function Sidebar() {
+  const [isSigningOut, setIsSigningOut] = useState(false);
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    await performSignOut();
+  };
+
   return (
     <aside className="w-64 bg-gray-900 text-white flex flex-col h-full border-r border-gray-800">
       <div className="p-6 border-b border-gray-800">
@@ -54,8 +65,17 @@ export default function Sidebar() {
         <Link href="/dashboard/settings" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-800 transition-colors text-sm font-medium text-gray-400">
           <Settings size={18} /> Settings
         </Link>
-        <button className="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-red-900/50 hover:text-red-400 transition-colors text-sm font-medium text-gray-400">
-          <LogOut size={18} /> Sign out
+        <button
+          onClick={handleSignOut}
+          disabled={isSigningOut}
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-red-900/50 hover:text-red-400 transition-colors text-sm font-medium text-gray-400 disabled:opacity-50 cursor-pointer"
+        >
+          {isSigningOut ? (
+            <Loader2 size={18} className="animate-spin text-red-400" />
+          ) : (
+            <LogOut size={18} />
+          )}
+          <span>{isSigningOut ? 'Signing out...' : 'Sign out'}</span>
         </button>
       </div>
     </aside>

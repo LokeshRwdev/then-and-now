@@ -4,6 +4,7 @@ import { Inter, Cormorant_Garamond } from "next/font/google";
 import { cn } from "@/lib/utils";
 import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import Footer from "@/components/layout/Footer";
+import GlobalLoader from "@/components/ui/GlobalLoader";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 const cormorant = Cormorant_Garamond({ 
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={cn(inter.variable, cormorant.variable, "antialiased")}>
       <body className="bg-brand-bg text-brand-text min-h-screen flex flex-col">
+        <GlobalLoader />
         {children}
         <WhatsAppButton />
         <Footer />

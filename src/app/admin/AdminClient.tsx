@@ -2,11 +2,12 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Plus, Pencil, Trash2, X, ExternalLink, Package, Tags } from 'lucide-react';
+import { Plus, Pencil, Trash2, X, ExternalLink, Package, Tags, LogOut } from 'lucide-react';
 import AppImage from '@/components/ui/AppImage';
 import VercelImageUploader from '@/components/admin/VercelImageUploader';
 import VisualProductPageEditor from '@/components/admin/VisualProductPageEditor';
 import { DEFAULT_PRODUCTS } from '@/lib/content/defaultData';
+import { performSignOut } from '@/lib/auth/signOut';
 
 type Category = { id: string; name: string; slug: string; description?: string; thumbnail_url?: string; sort_order?: number };
 type Product = {
@@ -109,7 +110,17 @@ export default function AdminClient() {
     <header className="sticky top-0 z-30 border-b border-neutral-800 bg-neutral-950 text-white">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
         <div className="flex items-center gap-3"><Link href="/admin" className="font-serif text-lg uppercase tracking-wide">Now &amp; Then</Link><span className="rounded border border-white/20 bg-white/10 px-2 py-1 text-[10px] uppercase tracking-widest">Admin</span></div>
-        <a href="/" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs text-neutral-300 hover:text-white">View site <ExternalLink size={14}/></a>
+        <div className="flex items-center gap-4">
+          <a href="/" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs text-neutral-300 hover:text-white">View site <ExternalLink size={14}/></a>
+          <button
+            onClick={() => performSignOut()}
+            className="flex items-center gap-1.5 text-xs text-neutral-400 hover:text-red-400 transition-colors px-2.5 py-1 rounded border border-white/10 hover:border-red-500/30 cursor-pointer"
+            title="Sign out of Admin"
+          >
+            <LogOut size={13} />
+            <span>Sign out</span>
+          </button>
+        </div>
       </div>
     </header>
     <main className="mx-auto max-w-7xl px-5 py-8">
