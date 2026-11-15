@@ -49,6 +49,12 @@ export async function proxy(request: NextRequest) {
   const isAdminRoute = request.nextUrl.pathname.startsWith('/admin')
   const isAdminApi = request.nextUrl.pathname.startsWith('/api/admin') || request.nextUrl.pathname.startsWith('/api/upload')
   
+  if (request.nextUrl.pathname === '/login' && user) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/admin'
+    return NextResponse.redirect(url)
+  }
+
   if ((isDashboardRoute || isAdminRoute) && !user) {
     // Protect the admin interface before it can call the service-role API.
     const url = request.nextUrl.clone()
