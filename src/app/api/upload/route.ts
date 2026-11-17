@@ -2,26 +2,19 @@ import { put, del } from '@vercel/blob';
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { createAdminClient } from '@/lib/supabase/admin';
 
 /**
- * Vercel Blob Upload & Storage API (with Local Dev Fallback)
+ * Multi-Tier Cloud Upload & Storage API
  *
- * 1. Upload (POST):
- *    - If valid Vercel Blob token (starts with 'vercel_blob_rw_') is provided:
- *      Uploads directly to Vercel Blob Edge CDN using `put(filename, stream, { access: 'public' })`.
- *    - In local development:
- *      If token is missing, invalid, or is just a Store ID ('store_...'),
- *      gracefully saves to `/public/uploads/` so the admin studio continues to work immediately.
- *    - Returns:
- *      `{ url, downloadUrl, pathname, contentType, warning?, isFallback? }`
- *
- * 2. Delete (DELETE):
- *    - Permanently deletes from Vercel Blob or `/public/uploads/`.
+ * Tier 1: Vercel Blob CDN (if BLOB_READ_WRITE_TOKEN is valid, starts with 'vercel_blob_rw_')
+ * Tier 2: Supabase Public Storage (uses existing Supabase credentials and public 'products' bucket)
+ * Tier 3: Local uploads (/public/uploads/) for offline local development
  */
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
   const rawFilename = searchParams.get('filename') || `upload-${Date.now()}.jpg`;
-  
+
   // Clean filename for safety and add timestamp prefix to avoid name collisions
   const sanitizedFilename = rawFilename.replace(/[^a-zA-Z0-9._-]/g, '_');
   const uniqueFilename = `${Date.now()}-${sanitizedFilename}`;
@@ -54,9 +47,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const isValidVercelToken = Boolean(
     token && (token.startsWith('vercel_blob_rw_') || token.startsWith('vercel_blob_'))
   );
-  const isStoreIdOnly = Boolean(token && token.startsWith('store_'));
 
-  // 1. If valid Vercel Blob token is provided, upload directly to Vercel Blob
+  // ========================================================
+  // Strategy 1: Vercel Blob CDN (if valid read-write token is present)
+  // ========================================================
   if (isValidVercelToken) {
     try {
       const blob = await put(uniqueFilename, uploadPayload, {
@@ -65,50 +59,68 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       });
       return NextResponse.json(blob);
     } catch (error: any) {
-      console.error('[Vercel Blob Upload Error]:', error);
-
-      // In local development, fall back gracefully to local uploads so developer isn't blocked
-      if (process.env.NODE_ENV !== 'production') {
-        const localUrl = saveToLocalUploads(uniqueFilename, buffer);
-        return NextResponse.json({
-          url: localUrl,
-          downloadUrl: localUrl,
-          pathname: uniqueFilename,
-          contentType,
-          warning: `Vercel Blob failed (${error.message}). Saved locally to ${localUrl}.`,
-          isFallback: true,
-        });
-      }
-
-      return NextResponse.json(
-        { error: error.message || 'Failed to upload to Vercel Blob' },
-        { status: 500 }
-      );
+      console.warn('[Vercel Blob failed, trying Supabase Cloud Storage]:', error.message || error);
     }
   }
 
-  // 2. Fallback for Local Development (when token is missing or is just a store_ ID)
+  // ========================================================
+  // Strategy 2: Supabase Cloud Storage (Production & General Fallback)
+  // ========================================================
+  try {
+    const adminClient = createAdminClient();
+    if (adminClient) {
+      const mimeType = contentType.includes('multipart') || contentType === 'application/octet-stream'
+        ? getMimeType(uniqueFilename)
+        : contentType;
+
+      const { data, error } = await adminClient.storage
+        .from('products')
+        .upload(uniqueFilename, buffer, {
+          contentType: mimeType,
+          upsert: true,
+        });
+
+      if (!error && data) {
+        const { data: pubData } = adminClient.storage
+          .from('products')
+          .getPublicUrl(uniqueFilename);
+
+        const publicUrl = pubData.publicUrl;
+
+        return NextResponse.json({
+          url: publicUrl,
+          downloadUrl: `${publicUrl}?download=1`,
+          pathname: uniqueFilename,
+          contentType: mimeType,
+          provider: 'supabase',
+        });
+      } else if (error) {
+        console.warn('[Supabase Storage upload warning]:', error.message);
+      }
+    }
+  } catch (supabaseErr: any) {
+    console.warn('[Supabase Storage upload error]:', supabaseErr.message || supabaseErr);
+  }
+
+  // ========================================================
+  // Strategy 3: Local Dev Storage (/public/uploads/)
+  // ========================================================
   if (process.env.NODE_ENV !== 'production') {
     const localUrl = saveToLocalUploads(uniqueFilename, buffer);
-    let warningMsg = 'Image saved locally to /public/uploads/.';
-
-    if (isStoreIdOnly) {
-      warningMsg = `Image saved locally. Note: "${token}" is your Vercel Store ID, not the token. To use Vercel CDN, copy the token starting with "vercel_blob_rw_" from Vercel > Storage > Settings / .env.local.`;
-    } else if (!token || token.includes('your_token_here')) {
-      warningMsg = 'Image saved locally to /public/uploads/. Configure BLOB_READ_WRITE_TOKEN in .env.local for Vercel CDN.';
-    }
-
     return NextResponse.json({
       url: localUrl,
       downloadUrl: localUrl,
       pathname: uniqueFilename,
       contentType,
-      warning: warningMsg,
+      warning: 'Image saved locally to /public/uploads/.',
       isFallback: true,
     });
   }
 
-  // 3. In production: Return helpful, actionable error
+  // ========================================================
+  // Strategy 4: If all cloud storage failed in production, return actionable error
+  // ========================================================
+  const isStoreIdOnly = Boolean(token && token.startsWith('store_'));
   if (isStoreIdOnly) {
     return NextResponse.json(
       {
@@ -120,9 +132,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
   return NextResponse.json(
     {
-      error: 'Vercel Blob: BLOB_READ_WRITE_TOKEN is missing or invalid. Please configure a valid token starting with "vercel_blob_rw_" in your environment variables.',
+      error: 'Cloud storage unavailable. Please check that Supabase credentials or BLOB_READ_WRITE_TOKEN (starting with "vercel_blob_rw_") are configured.',
     },
-    { status: 400 }
+    { status: 500 }
   );
 }
 
@@ -135,7 +147,7 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ error: 'Missing url parameter' }, { status: 400 });
     }
 
-    // Handle local uploads deletion
+    // 1. Handle local uploads deletion
     if (urlToDelete.startsWith('/uploads/')) {
       const filename = path.basename(urlToDelete);
       const filePath = path.join(process.cwd(), 'public', 'uploads', filename);
@@ -149,15 +161,53 @@ export async function DELETE(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json({ success: true });
     }
 
-    // Handle Vercel Blob deletion
+    // 2. Handle Supabase Storage deletion
+    if (urlToDelete.includes('supabase.co/storage')) {
+      const adminClient = createAdminClient();
+      if (adminClient) {
+        const parts = urlToDelete.split('/products/');
+        const filename = parts[parts.length - 1]?.split('?')[0];
+        if (filename) {
+          await adminClient.storage.from('products').remove([decodeURIComponent(filename)]);
+        }
+      }
+      return NextResponse.json({ success: true });
+    }
+
+    // 3. Handle Vercel Blob deletion
     const token = process.env.BLOB_READ_WRITE_TOKEN?.trim();
-    if (token && (token.startsWith('vercel_blob_rw_') || token.startsWith('vercel_blob_')) && urlToDelete.includes('blob.vercel-storage.com')) {
+    if (
+      token &&
+      (token.startsWith('vercel_blob_rw_') || token.startsWith('vercel_blob_')) &&
+      urlToDelete.includes('blob.vercel-storage.com')
+    ) {
       await del(urlToDelete, { token });
     }
 
     return NextResponse.json({ success: true });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+/**
+ * Determines file MIME type based on extension
+ */
+function getMimeType(filename: string): string {
+  const ext = path.extname(filename).toLowerCase();
+  switch (ext) {
+    case '.png':
+      return 'image/png';
+    case '.webp':
+      return 'image/webp';
+    case '.svg':
+      return 'image/svg+xml';
+    case '.gif':
+      return 'image/gif';
+    case '.jpg':
+    case '.jpeg':
+    default:
+      return 'image/jpeg';
   }
 }
 

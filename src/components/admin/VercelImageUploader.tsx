@@ -70,13 +70,15 @@ export default function VercelImageUploader({
         setDownloadUrl(newBlob.downloadUrl || `${newBlob.url}?download=1`);
         onImageUploaded(newBlob.url);
 
-        if (newBlob.isFallback) {
+        if ((newBlob as any).provider === "supabase") {
+          setSuccessNotice("Image uploaded to Cloud Storage successfully!");
+        } else if (newBlob.isFallback) {
           setSuccessNotice(
             newBlob.warning ||
               "Image saved locally. Enter BLOB_READ_WRITE_TOKEN in .env.local for Vercel CDN storage.",
           );
         } else {
-          setSuccessNotice("Uploaded to Vercel Blob CDN successfully!");
+          setSuccessNotice("Uploaded to Cloud CDN successfully!");
         }
       }
     } catch (err: any) {
